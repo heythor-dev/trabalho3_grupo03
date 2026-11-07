@@ -8,14 +8,17 @@ public class Trabalho3 {
     static int reaproveitamentos = 0;
     static int duplicadasDescartadas = 0;
 
+    // calcula a posicao inicial da chave e retorna chave % tamanho
     static int funcaoHash(int chave, int tamanho) {
         return chave % tamanho;
     }
 
+    // calcula a proxima posicao do rehashing e retorna (posicao + 1) % tamanho
     static int rehash(int posicao, int tamanho) {
         return (posicao + 1) % tamanho;
     }
 
+    // cria a tabela com VAZIO em todas as posicoes e retorna o vetor
     static int[] criaTabela(int tamanho) {
         int[] tabela = new int[tamanho];
         for (int indice = 0; indice < tamanho; indice++) {
@@ -24,6 +27,7 @@ public class Trabalho3 {
         return tabela;
     }
 
+    // busca a chave e retorna a posicao ou -1
     static int busca(int[] tabela, int chave) {
         int tamanho = tabela.length;
         int posicao = funcaoHash(chave, tamanho);
@@ -42,6 +46,7 @@ public class Trabalho3 {
         return -1;
     }
 
+    // insere a chave e retorna a posicao -1 (duplicada) ou -2 (cheia)
     static int insere(int[] tabela, int chave) {
         int tamanho = tabela.length;
         int posicao = funcaoHash(chave, tamanho);
@@ -77,6 +82,7 @@ public class Trabalho3 {
         }
     }
 
+    // remocao ingenua, grava VAZIO e retorna true se removeu
     static boolean removeIngenua(int[] tabela, int chave) {
         int posicao = busca(tabela, chave);
         if (posicao == -1) {
@@ -86,6 +92,7 @@ public class Trabalho3 {
         return true;
     }
 
+    // remocao correta, grava REMOVIDO e retorna true se removeu
     static boolean remove(int[] tabela, int chave) {
         int posicao = busca(tabela, chave);
         if (posicao == -1) {
@@ -95,6 +102,7 @@ public class Trabalho3 {
         return true;
     }
 
+    // reconstroi a tabela sem REMOVIDO e nao retorna valor
     static void reorganiza(int[] tabela) {
         int tamanho = tabela.length;
         int[] nova = criaTabela(tamanho);
@@ -109,6 +117,7 @@ public class Trabalho3 {
         }
     }
 
+    // conta as posicoes ocupadas e retorna a quantidade
     static int contaOcupadas(int[] tabela) {
         int quantidade = 0;
         int tamanho = tabela.length;
@@ -120,6 +129,7 @@ public class Trabalho3 {
         return quantidade;
     }
 
+    // conta as posicoes REMOVIDO e retorna a quantidade
     static int contaRemovidas(int[] tabela) {
         int quantidade = 0;
         int tamanho = tabela.length;
@@ -131,6 +141,7 @@ public class Trabalho3 {
         return quantidade;
     }
 
+    // conta as posicoes VAZIO e retorna a quantidade
     static int contaVazias(int[] tabela) {
         int quantidade = 0;
         int tamanho = tabela.length;
@@ -142,6 +153,7 @@ public class Trabalho3 {
         return quantidade;
     }
 
+    // gera chaves distintas de 7 digitos e retorna o vetor de chaves
     static int[] geraChaves(Random sorteio, int quantidade) {
         int[] chaves = new int[quantidade];
         int gerados = 0;
@@ -164,6 +176,7 @@ public class Trabalho3 {
         return chaves;
     }
 
+    // gera chaves de 7 digitos fora de chaves e retorna o vetor de ausentes
     static int[] geraAusentes(Random sorteio, int[] chaves, int quantidade) {
         int[] ausentes = new int[quantidade];
         int gerados = 0;
@@ -194,6 +207,7 @@ public class Trabalho3 {
         }
     }
 
+    // roda os 26 testes da secao 6 e imprime os resultados (nao retorna valor)
     static void executaTestes() {
         int aprovados = 0;
         int total = 26;
@@ -325,6 +339,7 @@ public class Trabalho3 {
         System.out.println("TESTES: " + aprovados + " de " + total + " aprovados");
     }
 
+    // roda os 5 experimentos da secao 5 e imprime as linhas (nao retorna valor)
     static void executaExperimentos() {
         Random sorteio = new Random(1990);
         int[] chaves = geraChaves(sorteio, 700);
@@ -451,6 +466,7 @@ public class Trabalho3 {
         System.out.printf("EXPERIMENTO 4 (reinsercao): inseridas=%d reaproveitamentos=%d falsosNegativos=%d ocupadas=%d removidas=%d vazias=%d acessosSucessoMedia=%.2f%n", inseridas4, reaproveitamentos4, falsosNegativos4, ocupadas4, removidas4, vazias4, acessosSucessoMedia4);
     }
 
+    // chama os testes e depois os experimentos (nao retorna valor)
     public static void main(String[] args) {
         executaTestes();
         executaExperimentos();
